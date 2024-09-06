@@ -14,13 +14,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(glfw3 CONFIG REQUIRED) 
 find_package(glm CONFIG REQUIRED) 
 find_package(Vulkan REQUIRED) 
-message("Found glad: ${Vulkan_VERSION}")
+message("Found Vulkan: ${Vulkan_VERSION}")
 message("Found glfw: ${glfw3_VERSION}") 
+message("Found glfw3: ${glm_VERSION}") 
+
+include_directories(${glfw3_INCLUDE_DIR})
+include_directories(${glm_INCLUDE_DIR})
+include_directories(${Vulkan_INCLUDE_DIR})
 
 add_subdirectory(vulkanWrapper)
 
-aux_source_directory(./src SRC)
-file(GLOB INCLUDE ./include/*.h)
+aux_source_directory(src SRC)
+file(GLOB INCLUDE include/*.h)
 
 add_executable(${PROJECT_NAME} ${INCLUDE} ${SRC})
 
