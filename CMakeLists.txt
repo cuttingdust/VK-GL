@@ -17,10 +17,16 @@ find_package(Vulkan REQUIRED)
 message("Found glad: ${Vulkan_VERSION}")
 message("Found glfw: ${glfw3_VERSION}") 
 
+add_subdirectory(vulkanWrapper)
+
 aux_source_directory(./src SRC)
+file(GLOB INCLUDE ./include/*.h)
 
-add_executable(${PROJECT_NAME} ${SRC})
+add_executable(${PROJECT_NAME} ${INCLUDE} ${SRC})
 
+target_include_directories(${PROJECT_NAME} PRIVATE ./include)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC glm::glm)
 target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
-target_link_libraries(${PROJECT_NAME} PRIVATE glm::glm)
 target_link_libraries(${PROJECT_NAME} PRIVATE Vulkan::Vulkan)
+target_link_libraries(${PROJECT_NAME} PRIVATE vulkanWrapper)
